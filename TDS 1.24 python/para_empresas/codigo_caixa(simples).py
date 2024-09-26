@@ -21,5 +21,3 @@ else:
 
 
 
-print('fdsknsajfdodj')
-print('13109i3')
