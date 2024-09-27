@@ -13,8 +13,8 @@ while True:
         break 
     consumo = float(input('Consumo do carro por km²: '))
     if carro in carros:
-        idx = carros.index(carro)
-        consumos[idx].append(consumo)
+        index = carros.index(carro)
+        consumos[index].append(consumo)
         consumo = None
     else:
         carros.append(carro)
@@ -28,7 +28,8 @@ menos_economico = consumos.index(min(consumos))
 
 print('\n')
 for i in range(len(carros)):
-    print('O carro', carros[i], 'deverá consumir: ', distancia/media_consumos[i]*preco,'litros de combustiveis')
+    valor = distancia/media_consumos[i]
+    print('O carro', carros[i], 'deverá consumir: ', valor, 'litros de combustiveis', '\n', 'e terá um gasto de: ', 'R$',valor*preco )
     print('\n' + '--------------------------------------------------------------------------------------------------')
 
 
