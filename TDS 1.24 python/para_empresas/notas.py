@@ -5,7 +5,7 @@ def classificar_alunos(alunos):
 
 resultado = 'A lista de resultado dos alunos APROVADOS e REPROVADOS é: '
 linha = '------------------------------------------------------------------'
-print('\n' + linha + '\n' + resultado + '\n')
-alunos_notas = [('Ana', 8), ('Biel', 5), ('Joao', 3), ('Du', 10)]
-print(classificar_alunos(alunos_notas))
+print('\n' + linha + '\n' + resultado + '\n') # organização
+alunos_notas = [('Ana', 8), ('Biel', 5), ('Joao', 3), ('Du', 10)] # armazenando nota dos alunos
+print(classificar_alunos(alunos_notas)) # chamando a função para rodar em [alunos_notas]  e fazer a verificação das aprovações
 print(linha +'\n')
