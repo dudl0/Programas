@@ -26,6 +26,13 @@ msg2_borda.place(relx=0.05, rely=0.25, anchor="w")
 
 msg_valor = tk.Label(text='Valor', font=('Ariel', 11), width=10, height=1)
 msg_valor.place(relx=0.03, rely=0.2, anchor="w")
+#----------------
+borda_valor = tk.Frame(tela,background='#A1A8B0')
+bordaval = tk.Label(borda_valor,text='0,00', font=('Ariel', 11), fg='#A1A8B0',bd=0, width=10, height=1)
+bordaval.pack(fill='both', expand='True', padx=1.5, pady=1.5)
+borda_valor.place(relx=0.09, rely=0.2, anchor="w")
+
+
 
 
 msg_Converter = tk.Label(text='Converter de', font=('Ariel', 11), width=10, height=1)
