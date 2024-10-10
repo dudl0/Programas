@@ -1,4 +1,4 @@
-import customtkinter 
+import customtkinter
 from ctypes import windll
 from PIL import Image
 
@@ -19,14 +19,14 @@ def centralizar_janela(janela):
 
 
 
-tela.geometry('1200x750')
+tela.geometry('500x400')
 tela.resizable(False,False)
 tela.title('')
 
 customtkinter.set_appearance_mode('light')
 
 
-label_image = customtkinter.CTkImage(light_image=Image.open('Tkinter/images/fundo.png'), size=(500, 402))
+label_image = customtkinter.CTkImage(light_image=Image.open('Tkinter/images/fundo.png'), size=(500, 400))
 image_label = customtkinter.CTkLabel(master=tela,text='', image=label_image)
 image_label.place(anchor='center',x=250,y=200)
 
