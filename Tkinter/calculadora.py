@@ -51,7 +51,7 @@ buttons = [
 ]
 
 # Função para criar os botões com o estilo específico
-def create_button(frame, text, color="#FFFFFF", bg="#C0C0C0"):
+def create_button(frame, text, color="#FFFFFF", bg='#C4BDBA'):
     # Cria um botão com o texto, cor de fundo, e estilo desejado
     button = tk.Button(frame, text=text, font="Arial 20", padx=20, pady=20, bg=bg, fg=color, borderwidth=0)
     # Posiciona o botão no frame (linha) e ajusta o tamanho para preencher o espaço disponível
@@ -65,9 +65,17 @@ for line in buttons:
     # Cria um frame (linha) para organizar os botões da calculadora
     frame = tk.Frame(root, bg="#F0F0F0")  # Cor de fundo similar à calculadora do Windows
     frame.pack(expand=True, fill="both")  # Ajusta o frame para preencher o espaço disponível
+
     for button_text in line:
-        # Para cada botão na linha, cria o botão com o texto e estilo apropriados
-        create_button(frame, button_text)
+        if button_text in ["+", "-", "*", "/", "="]:
+            # Botões de operações (+, -, *, /, =) têm cor laranja
+            create_button(frame, button_text, color="#FFFFFF", bg="#CF8C19")
+        elif button_text == "C":
+            # O botão de limpar ("C") é vermelho
+            create_button(frame, button_text, color="#FFFFFF", bg="#B73A00")
+        else:
+            # Botões numéricos (0-9) têm o estilo padrão (cinza claro)
+            create_button(frame, button_text)
         
 # Inicia o loop principal da aplicação (para exibir a janela)
 root.mainloop()
