@@ -20,6 +20,9 @@ def refresh():
     print('refresh')
 
 
+home.overrideredirect(1)
+
+
 home_image = ctk.CTkImage(light_image=Image.
                           open('Tkinter/images/proj.png'), 
                           size=(1200, 750))
