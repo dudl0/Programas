@@ -1,182 +1,167 @@
 import customtkinter as ctk
 from ctypes import windll
 from PIL import Image
-<<<<<<< HEAD
- 
- 
- 
-tela = customtkinter.CTk()
- 
-windll.shcore.SetProcessDpiAwareness(2)
- 
-def centralizar_janela(janela):
-    janela.update_idletasks()
-    largura = janela.winfo_width()
-    altura = janela.winfo_height()
-    x = (janela.winfo_screenwidth() // 2) - (largura // 2)
-    y = (janela.winfo_screenheight() // 2) - (altura // 2) - (50)
-    janela.geometry(f'{largura}x{altura}+{x}+{y}')
- 
- 
- 
- 
-tela.geometry('1200x750')
-tela.resizable(False,False)
-tela.title('')
- 
-customtkinter.set_appearance_mode('light')
- 
- 
-label_image = customtkinter.CTkImage(light_image=Image.open('Tkinter/images/login.png'), size=(1200, 750))
-image_label = customtkinter.CTkLabel(master=tela,text='', image=label_image)
-image_label.place(anchor='center',x=600,y=375)
- 
- 
-login_text = customtkinter.CTkLabel(tela,text='Fazer Login',font=('Tahoma',32, 'bold'),fg_color='white',text_color='#62859B')
-login_text.place(x=708,y=55)
- 
-email_bordetext = customtkinter.CTkLabel(tela,text='Email', font=('Ariel', 15), bg_color='white')
-email_bordetext.place(x=709,y=228)
- 
-email_text = customtkinter.CTkEntry(tela,placeholder_text='Seu email', border_width=1.4, border_color='#4a4a4a', fg_color='white',corner_radius=5, width=437, height=44)
-email_text.place(x=708,y=250)
- 
-senha_bordetext = customtkinter.CTkLabel(tela,text='Senha', font=('Ariel', 15), bg_color='white')
-senha_bordetext.place(x=709,y=351)
- 
-senha_text = customtkinter.CTkEntry(tela,placeholder_text='Sua senha', border_width=1.4, border_color='#4a4a4a', fg_color='white', corner_radius=5, width=437,height=44, show='*')
-senha_text.place(x=708,y=373)
- 
-checkbox_remember = customtkinter.CTkCheckBox(tela,text='Lembrar Login',font=('Ariel', 14),text_color='#4a4a4a',bg_color='white',fg_color='#006ff9',checkbox_height=28,checkbox_width=28,border_width=1.5, corner_radius=9)
-checkbox_remember.place(x=710,y=438)
- 
- 
-def funclick():
-    print('login')
- 
-btn_login = customtkinter.CTkButton(master=tela,text='Login',bg_color='white',fg_color='#62859B',font=('Tahoma', 18,'bold'),text_color='white', command=funclick, width=179, height=44)
-btn_login.place(x=837,y=563)
- 
- 
-senha_text = customtkinter.CTkLabel(tela,bg_color='white',text='Problemas com Login?',font=('Ariel', 14,'underline'),text_color='#4a4a4a', fg_color='white', width=179, height=44 )
-senha_text.place(x=837,y=610)
- 
- 
- 
- 
-centralizar_janela(tela)
- 
- 
- 
- 
-tela.mainloop()
- 
-=======
 
 windll.shcore.SetProcessDpiAwareness(2)
 
 home = ctk.CTk()
 ctk.set_appearance_mode('light')
 
-def calendario():
-    print('Calendario')
-
-def ajust():
-    print('Ajust') 
-
-def lixo():
-    print('Lixeira')
-
-def refresh():
-    print('refresh')
 
 
-home_image = ctk.CTkImage(light_image=Image.
-                          open('Tkinter/images/proj.png'), 
-                          size=(1200, 750))
-
-image_home = ctk.CTkLabel(master=home,text='', 
-                          image=home_image)
-
-image_home.place(anchor='center',
-                 x=600,y=375)
-
-
-image_calendario = ctk.CTkImage(light_image= Image.open('Tkinter/images/calendario.png'), size=(30, 25))
-
-
-button_calendario = ctk.CTkButton(home, bg_color='white',
-                                  text='',
-                                  fg_color='white',
-                                  hover_color='white',
-                                  command=calendario,
-                                  width=0,
-                                  height=0,
-                                  image=image_calendario)
-button_calendario.place(x=296,y=17)
-
-
-image_ajust = ctk.CTkImage(light_image= Image.open('Tkinter/images/Ajust.png'), size=(30, 25))
-
-button_ajust =  ctk.CTkButton(home, bg_color='white',
-                                  text='',
-                                  fg_color='white',
-                                  hover_color='white',
-                                  command=ajust,
-                                  width=0,
-                                  height=0,
-                                  image=image_ajust)
-
-button_ajust.place(x=328,y=17)
-
-
-image_lixo = ctk.CTkImage(light_image= Image.open ('Tkinter/images/lixo.png'), size=(30, 25))
-
-button_lixo = ctk.CTkButton(home, bg_color='white',
-                                  text='',
-                                  fg_color='white',
-                                  hover_color='white',
-                                  command=lixo,
-                                  width=0,
-                                  height=0,
-                                  image=image_lixo)
-
-button_lixo.place(x=360,y=17)
-
-
-
-image_refresh = ctk.CTkImage(light_image= Image.open('Tkinter/images/refresh.png'), size=(30, 25))
-
-button_refresh = ctk.CTkButton(home, bg_color='white',
-                                  text='',
-                                  fg_color='white',
-                                  hover_color='white',
-                                  command=refresh,
-                                  width=0,
-                                  height=0,
-                                  image=image_refresh)
-
-button_refresh.place(x=392,y=17)
-
-
-label_search = ctk.CTkEntry(master=home, placeholder_text='                                                           search',
-                            bg_color='white',
-                            fg_color='#F5F5F5',
-                            border_color='white',
-                            corner_radius=9, 
-                            width=425, 
-                            height=30)
-label_search.place(x=503,y=17)
-
-
+home_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/fundohome.png'), size=(1200, 750))
+home_label = ctk.CTkLabel(master=home, image=home_image,text=None)
+home_label.pack(anchor='center')
 
 
 home.geometry('1200x750')
 home.resizable(False,False)
 home.title('')
 
+#--------------------- Funcionário ---------------------
+
+def Abrir_tela_funcionario():
+        interior_func = ctk.CTkFrame(master=home,bg_color='#DEDEDE',fg_color='#DEDEDE',width=840,height=636)
+        interior_func.place(x=298,y=64)
+
+        barra_pesquisa = ctk.CTkEntry(
+                                      master=interior_func,
+                                      placeholder_text='Pesquisar',
+                                      border_color='white',
+                                      font=('Istok Web', 14),
+                                      bg_color='#DEDEDE',
+                                      fg_color='white',
+                                      corner_radius=5,
+                                      width=345,
+                                      height=28)
+        barra_pesquisa.place(x=25,y=0)
+        lupa_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/ttt.png'), size=(28,28))
+        lupa_label = ctk.CTkLabel(master=interior_func,text=None,height=28,image=lupa_image)
+        lupa_label.place(x=0,y=0)
+        
+        filtro = ctk.CTkEntry(
+                              master=interior_func,
+                              placeholder_text='Filtro',
+                              justify='center',                              
+                              border_color='white',
+                              font=('Istok Web', 14),
+                              bg_color='#DEDEDE',
+                              fg_color='white',
+                              corner_radius=5,
+                              width=120,
+                              height=28)
+        filtro.place(x=420,y=0)
+        filtro_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/Filter.png'), size=(20,20))
+        filtro_label = ctk.CTkLabel(master=interior_func, 
+                                    image=filtro_image,
+                                    text=None,
+                                    bg_color='white',
+                                    fg_color='white',
+                                    width=0,
+                                    height=0)
+        filtro_label.place(x=425,y=4)
+        
+        adicionar_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/adicionar.png'), size=(110,28))
+        adicionar_label = ctk.CTkButton(master=interior_func, 
+                                        image=adicionar_image,
+                                        text=None,
+                                        bg_color='#DEDEDE',
+                                        fg_color='#DEDEDE',
+                                        hover=None,
+                                        width=0,
+                                        height=0,
+                                        border_spacing=0)
+        adicionar_label.place(x=580,y=-3.5)
+
+        delete_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/delete.png'), size=(110,28))
+        delete_label = ctk.CTkButton(master=interior_func, 
+                                     image=delete_image,
+                                     text=None,
+                                     bg_color='#DEDEDE',
+                                     fg_color='#DEDEDE',
+                                     hover=None,
+                                     width=0,
+                                     height=0,
+                                     border_spacing=0)
+        delete_label.place(x=727,y=-3.5)
+
+
+#------------  LATERAL -----------------
+
+
+
+logo_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/vslogo.png'), size=(40,40))
+logo_label = ctk.CTkLabel(master=home, image=logo_image,text=None,bg_color='white',fg_color='white',width=0,height=0)
+logo_label.place(x=27,y=20)
+
+
+foto_user_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/foto.png'), size=(40,40))
+logo_label = ctk.CTkLabel(master=home, 
+                          image=foto_user_image,
+                          text=None,
+                          bg_color='white',
+                          fg_color='white',
+                          width=0,
+                          height=0)
+logo_label.place(x=23,y=110)
+logo_text_label = ctk.CTkLabel(master=home,
+                               text='Eduardo Costa Lobo',
+                               text_color='#787878',
+                               font=('Istok Web', 14),
+                               bg_color='white',
+                               width=0,
+                               height=0)
+logo_text_label.place(x=73,y=120)
+
+
+
+funcionario_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/func.png'), size=(237,50))
+funcionario_button = ctk.CTkButton(master=home,
+                                   text=None,
+                                   image=funcionario_image,
+                                   bg_color='#E9E5E5',
+                                   fg_color='white',
+                                   hover_color='#E9E5E5',
+                                   border_color='#E9E5E5',
+                                   width=0,
+                                   height=0,
+                                   command=Abrir_tela_funcionario
+                                   )
+funcionario_button.place(x=-8,y=200)
+
+
+cadastro_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/cadastro.png'), size=(237,50))
+cadastro_button = ctk.CTkButton(master=home,
+                                   text=None,
+                                   image=cadastro_image,
+                                   bg_color='#E9E5E5',
+                                   fg_color='white',
+                                   hover_color='#E9E5E5',
+                                   border_color='#E9E5E5',
+                                   width=0,
+                                   height=0,
+                                   )
+cadastro_button.place(x=-8,y=255)
+
+
+meusdados_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/meusdados.png'), size=(237,50))
+meusdados_button = ctk.CTkButton(master=home,
+                                   text=None,
+                                   image=meusdados_image,
+                                   bg_color='#E9E5E5',
+                                   fg_color='white',
+                                   hover_color='#E9E5E5',
+                                   border_color='#E9E5E5',
+                                   width=0,
+                                   height=0,
+                                   )
+meusdados_button.place(x=-8,y=320)
+
+
+
+
+
+
 
 home.mainloop()
 
-
->>>>>>> a01f9083114b623cb77dcaf172a7337755b781da
