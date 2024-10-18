@@ -12,7 +12,6 @@ home = ctk.CTk()
 ctk.set_appearance_mode('light')
 
 
-
 home_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/fundohome.png'), size=(1200, 750))
 home_label = ctk.CTkLabel(master=home, image=home_image,text=None)
 home_label.pack(anchor='center')
