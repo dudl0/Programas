@@ -12,7 +12,7 @@ home = ctk.CTk()
 ctk.set_appearance_mode('light')
 
 
-home_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/fundohome.png'), size=(1200, 750))
+home_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/fundohome.png'), size=(1200, 750))
 home_label = ctk.CTkLabel(master=home, image=home_image,text=None)
 home_label.pack(anchor='center')
 
@@ -54,7 +54,7 @@ def cd_leave(event):
 def Abrir_tela_funcionario():
 
         def carregar_dados():
-                arquivo_csv = 'C:/Programas/clientes.csv'
+                arquivo_csv = 'D:/Programas/clientes.csv'
                 
                 # Verificar se o arquivo existe
                 if not os.path.isfile(arquivo_csv):
@@ -69,7 +69,7 @@ def Abrir_tela_funcionario():
                         leitor_csv = csv.reader(file)
                         next(leitor_csv)  # Pular o cabeçalho, caso necessário
                         for linha in leitor_csv:
-                                dados.append((linha[0],linha[6],linha[4],linha[3],linha[2]))  # Converter cada linha em uma tupla e adicionar à lista
+                                dados.append((linha[0],linha[5],linha[4],linha[3],linha[2],linha[1]))  # Converter cada linha em uma tupla e adicionar à lista
 
                         return dados
 
@@ -83,10 +83,28 @@ def Abrir_tela_funcionario():
 
                 # Insere apenas as linhas que correspondem à pesquisa
                 for item in dados:
-                        if search_query in item[1].lower():  # Filtra pelo nome (índice 1), mas pode ajustar para outras colunas
+                        if search_query in item[0].lower():  # Filtra pelo nome (índice 1), mas pode ajustar para outras colunas
                                 table.insert("", "end", values=item)
 
 
+        def deletar_linha():
+                arquivo_csv = 'D:/Programas/clientes.csv'
+                selecionado = table.selection()
+               
+                # Obtém os dados da linha selecionada para remoção do CSV
+                linhas_para_manter = []
+                for item in table.get_children():
+                        if item not in selecionado:
+                                linhas_para_manter.append(('Nome /,Email /,Cpf /,Salário /,Setor /,Senha /,Cargo /'))
+                                linhas_para_manter.append(table.item(item)['values'])
+
+                # Atualiza o treeview e o CSV
+                table.delete(*selecionado)
+
+                # Escreve as linhas restantes de volta no CSV
+                with open(arquivo_csv, mode='w', newline='', encoding='utf-8') as csvfile:
+                        escritor = csv.writer(csvfile)
+                        escritor.writerows(linhas_para_manter)
 
         meusdados_button = ctk.CTkButton(
                                  master=home,
@@ -151,7 +169,7 @@ def Abrir_tela_funcionario():
                                                            )
         barra_pesquisa.place(x=25,y=0)
         barra_pesquisa.bind("<KeyRelease>", buscar_dados)
-        lupa_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/ttt.png'), size=(28,28))
+        lupa_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/ttt.png'), size=(28,28))
         lupa_label = ctk.CTkLabel(master=interior_func,text=None,height=28,image=lupa_image)
         lupa_label.place(x=0,y=0)
         
@@ -167,7 +185,7 @@ def Abrir_tela_funcionario():
                               width=120,
                               height=28)
         filtro.place(x=420,y=0)
-        filtro_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/Filter.png'), size=(20,20))
+        filtro_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/Filter.png'), size=(20,20))
         filtro_label = ctk.CTkLabel(master=interior_func, 
                                     image=filtro_image,
                                     text=None,
@@ -177,7 +195,7 @@ def Abrir_tela_funcionario():
                                     height=0)
         filtro_label.place(x=425,y=4)
         
-        adicionar_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/adicionar.png'), size=(110,28))
+        adicionar_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/adicionar.png'), size=(110,28))
         adicionar_label = ctk.CTkButton(master=interior_func, 
                                         image=adicionar_image,
                                         text=None,
@@ -189,7 +207,10 @@ def Abrir_tela_funcionario():
                                         border_spacing=0)
         adicionar_label.place(x=580,y=-3.5)
 
-        delete_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/delete.png'), size=(110,28))
+
+
+
+        delete_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/delete.png'), size=(110,28))
         delete_label = ctk.CTkButton(master=interior_func, 
                                      image=delete_image,
                                      text=None,
@@ -198,7 +219,9 @@ def Abrir_tela_funcionario():
                                      hover=None,
                                      width=0,
                                      height=0,
-                                     border_spacing=0)
+                                     border_spacing=0,
+                                     command=deletar_linha
+                                                           )
         delete_label.place(x=727,y=-3.5)
 
         style = ttk.Style()
@@ -211,7 +234,7 @@ def Abrir_tela_funcionario():
         style.configure(
                         "Custom.Treeview", 
                         font=('Istok Web', 10),
-                        rowheight=32
+                        rowheight=28
                                 ) 
         style.configure("Custom.Treeview.Heading",
                 background="white",  # Cor de fundo dos cabeçalhos
@@ -225,7 +248,7 @@ def Abrir_tela_funcionario():
         
   
         
-        table = ttk.Treeview(interior_func, columns = ('nome', 'cargo', 'setor','salario','cpf'), show='headings', style="Custom.Treeview")
+        table = ttk.Treeview(interior_func, columns = ('nome', 'cargo', 'setor','salario','cpf','email'), show='headings', style="Custom.Treeview")
         
    
         table.heading('nome', text='Nome',anchor='w')
@@ -233,17 +256,19 @@ def Abrir_tela_funcionario():
         table.heading('setor', text='Setor',anchor='w')
         table.heading('salario', text='Salario',anchor='w')
         table.heading('cpf', text='Cpf',anchor='w')
+        table.heading('email', text='Email',anchor='w')
 
 
-        table.column('nome', width=160)
-        table.column('cargo', width=160)
-        table.column('setor', width=100)
-        table.column('salario', width=137)
-        table.column('cpf', width=115)
+        table.column('nome', width=110)
+        table.column('cargo', width=60)
+        table.column('setor', width=60)
+        table.column('salario', width=60)
+        table.column('cpf', width=80)
+        table.column('email', width=130)
         
 
         dados = carregar_dados()
-        print(dados)
+        
         for item in dados:
                 table.insert("", "end", values=item)
 
@@ -588,7 +613,7 @@ def Abrir_tela_cadastro():
                                           )
         cargo_entry.place(x=35,y=440)
 
-        linha_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/linha.png'), size=(376,3))
+        linha_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/linha.png'), size=(376,3))
         
         linha = ctk.CTkLabel(
                              interior_cadastro,
@@ -696,7 +721,7 @@ def Abrir_tela_cadastro():
 def Abrir_tela_md():
         
         def carregar_dados(n):
-                arquivo_csv = 'C:/Programas/clientes.csv'
+                arquivo_csv = 'D:/Programas/clientes.csv'
                 
                 # Verificar se o arquivo existe
                 if not os.path.isfile(arquivo_csv):
@@ -970,7 +995,7 @@ def Abrir_tela_md():
                                           )
         cargo_entry.place(x=35,y=440)
 
-        linha_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/linha.png'), size=(376,3))
+        linha_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/linha.png'), size=(376,3))
         
         linha = ctk.CTkLabel(
                              interior_md,
@@ -1076,7 +1101,7 @@ def Abrir_tela_md():
 
 
 
-logo_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/vslogo.png'), size=(40,40))
+logo_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/vslogo.png'), size=(40,40))
 logo_label = ctk.CTkLabel(
                           master=home, 
                           image=logo_image,
@@ -1088,7 +1113,7 @@ logo_label = ctk.CTkLabel(
 logo_label.place(x=27,y=20)
 
 
-foto_user_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/foto.png'), size=(40,40))
+foto_user_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/foto.png'), size=(40,40))
 logo_label = ctk.CTkLabel(
                           master=home, 
                           image=foto_user_image,
@@ -1111,8 +1136,8 @@ logo_text_label.place(x=73,y=120)
 
 
 
-funcionario_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/func.png'), size=(237,50))
-funcionario_hover_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/func_hover.png'), size=(237,50))
+funcionario_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/func.png'), size=(237,50))
+funcionario_hover_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/func_hover.png'), size=(237,50))
 funcionario_button = ctk.CTkButton(
                                    master=home,
                                    text=None,
@@ -1128,8 +1153,8 @@ funcionario_button = ctk.CTkButton(
 funcionario_button.place(x=-8,y=190)
 
 
-cadastro_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/cadastro.png'), size=(237,50))
-cadastro_hover = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/cad_hover.png'), size=(237,50))
+cadastro_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/cadastro.png'), size=(237,50))
+cadastro_hover = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/cad_hover.png'), size=(237,50))
 cadastro_button = ctk.CTkButton(
                                 master=home,
                                 text=None,
@@ -1145,8 +1170,8 @@ cadastro_button = ctk.CTkButton(
 cadastro_button.place(x=-8,y=255)
 
 
-meusdados_image = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/meusdados.png'), size=(237,50))
-md_hover = ctk.CTkImage(light_image=Image.open('C:/Programas/Tkinter/images/md_hover.png'), size=(237,50))
+meusdados_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/meusdados.png'), size=(237,50))
+md_hover = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/md_hover.png'), size=(237,50))
 meusdados_button = ctk.CTkButton(
                                  master=home,
                                  text=None,
@@ -1175,7 +1200,7 @@ meusdados_button.bind("<Enter>", md_enter)
 meusdados_button.bind("<Leave>", md_leave)
 
 
-home.iconbitmap('C:/Programas/Tkinter/images/vslogo.png')
+home.iconbitmap('D:/Programas/Tkinter/images/vslogo.png')
 
 home.mainloop()
 
