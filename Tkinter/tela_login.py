@@ -8,6 +8,18 @@ import os
 
 windll.shcore.SetProcessDpiAwareness(2)
 
+
+
+#------------------------------------------------------
+#------------------- Login ---------------------------
+
+
+#----------------------------------------------------
+#---------------------------------------------------
+
+
+
+
 home = ctk.CTk()
 ctk.set_appearance_mode('light')
 
@@ -24,8 +36,35 @@ home.title('')
 
 
 
+def deletar_linha():
+                arquivo_csv = 'D:/Programas/clientes.csv'
+                selecionado = table.selection()
 
+                # Obtém os dados da linha selecionada para remoção do CSV
+                linhas_para_manter = []
 
+                # Abrir o CSV e ler as linhas
+                with open(arquivo_csv, 'r', newline='', encoding='utf-8') as f:
+                        leitor_csv = csv.reader(f)
+                        linhas = list(leitor_csv)  # Converter o leitor CSV para uma lista
+
+                # Adiciona o cabeçalho (primeira linha) apenas uma vez
+                if linhas:
+                        linhas_para_manter.append(linhas[0])  # Cabeçalho original (sem strip)
+
+                # Verifica as linhas da tabela e mantém apenas as que não estão selecionadas
+                for index, item in enumerate(table.get_children()):
+                        valores_linha = table.item(item)['values']
+                        # Mantém a linha apenas se ela NÃO estiver selecionada
+                        if item not in selecionado:
+                                linhas_para_manter.append(linhas[index + 1])  # +1 para ignorar o cabeçalho
+
+                # Escreve os dados de volta ao arquivo CSV, sobrescrevendo o original
+                with open(arquivo_csv, 'w', newline='', encoding='utf-8') as f:
+                        escritor_csv = csv.writer(f)
+                        escritor_csv.writerows(linhas_para_manter)  # Escreve as linhas no formato CSV
+
+                Abrir_tela_funcionario()
 
 
 #-------------------------------------------------------
@@ -53,6 +92,8 @@ def cd_leave(event):
 
 def Abrir_tela_funcionario():
 
+        global table
+
         def carregar_dados():
                 arquivo_csv = 'D:/Programas/clientes.csv'
                 
@@ -69,7 +110,7 @@ def Abrir_tela_funcionario():
                         leitor_csv = csv.reader(file)
                         next(leitor_csv)  # Pular o cabeçalho, caso necessário
                         for linha in leitor_csv:
-                                dados.append((linha[0],linha[5],linha[4],linha[3],linha[2],linha[1]))  # Converter cada linha em uma tupla e adicionar à lista
+                                dados.append((linha[0],linha[6],linha[4],linha[3],linha[2],linha[1]))  # Converter cada linha em uma tupla e adicionar à lista
 
                         return dados
 
@@ -87,24 +128,7 @@ def Abrir_tela_funcionario():
                                 table.insert("", "end", values=item)
 
 
-        def deletar_linha():
-                arquivo_csv = 'D:/Programas/clientes.csv'
-                selecionado = table.selection()
-               
-                # Obtém os dados da linha selecionada para remoção do CSV
-                linhas_para_manter = []
-                for item in table.get_children():
-                        if item not in selecionado:
-                                linhas_para_manter.append(('Nome /,Email /,Cpf /,Salário /,Setor /,Senha /,Cargo /'))
-                                linhas_para_manter.append(table.item(item)['values'])
-
-                # Atualiza o treeview e o CSV
-                table.delete(*selecionado)
-
-                # Escreve as linhas restantes de volta no CSV
-                with open(arquivo_csv, mode='w', newline='', encoding='utf-8') as csvfile:
-                        escritor = csv.writer(csvfile)
-                        escritor.writerows(linhas_para_manter)
+        
 
         meusdados_button = ctk.CTkButton(
                                  master=home,
@@ -196,7 +220,7 @@ def Abrir_tela_funcionario():
         filtro_label.place(x=425,y=4)
         
         adicionar_image = ctk.CTkImage(light_image=Image.open('D:/Programas/Tkinter/images/adicionar.png'), size=(110,28))
-        adicionar_label = ctk.CTkButton(master=interior_func, 
+        adicionar_button = ctk.CTkButton(master=interior_func, 
                                         image=adicionar_image,
                                         text=None,
                                         bg_color='#DEDEDE',
@@ -204,8 +228,10 @@ def Abrir_tela_funcionario():
                                         hover=None,
                                         width=0,
                                         height=0,
-                                        border_spacing=0)
-        adicionar_label.place(x=580,y=-3.5)
+                                        border_spacing=0,
+                                        command=Abrir_tela_cadastro
+                                                                    )
+        adicionar_button.place(x=580,y=-3.5)
 
 
 
@@ -260,11 +286,11 @@ def Abrir_tela_funcionario():
 
 
         table.column('nome', width=110)
-        table.column('cargo', width=60)
+        table.column('cargo', width=110)
         table.column('setor', width=60)
-        table.column('salario', width=60)
-        table.column('cpf', width=80)
-        table.column('email', width=130)
+        table.column('salario', width=40)
+        table.column('cpf', width=60)
+        table.column('email', width=160)
         
 
         dados = carregar_dados()
@@ -414,7 +440,7 @@ def Abrir_tela_cadastro():
                                           )
         nome_text.place(x=35,y=121)                               
         
-
+        
         email_text = ctk.CTkLabel(
                                 interior_cadastro,
                                 text='Email',
@@ -720,23 +746,32 @@ def Abrir_tela_cadastro():
 
 def Abrir_tela_md():
         
-        def carregar_dados(n):
-                arquivo_csv = 'D:/Programas/clientes.csv'
-                
-                # Verificar se o arquivo existe
-                if not os.path.isfile(arquivo_csv):
-                        print(f"O arquivo {arquivo_csv} não foi encontrado.")
-                        return []
 
-                # Inicializar a lista de dados
-                dados = []
-                
-                # Abrir o arquivo e ler os dados
-                with open(arquivo_csv, mode="r", newline="", encoding="utf-8") as file:
-                        leitor_csv = csv.reader(file)
-                        next(leitor_csv)  # Pular o cabeçalho, caso necessário
-                        for linha in leitor_csv:
-                                dados.append((linha[n]))
+
+        def buscar_email(email_buscado):
+                with open('D:/Programas/clientes.csv', 'r') as csvfile:
+                        linhas_encontradas = []  # Lista para armazenar as linhas encontradas
+                        reader = csv.reader(csvfile)
+                        next(reader)  # Pular o cabeçalho
+                        for linha in reader:
+                                print(linha)  # Adiciona impressão para depuração
+                                if linha[1].strip() == email_buscado:  # Remove espaços em branco
+                                        linhas_encontradas.append(linha)  # Adiciona a linha à lista
+                return linhas_encontradas  # Retorna a lista de linhas
+
+        # Chamada da função e armazenamento da saída em uma lista
+        resultado = buscar_email('duducostalobo10@gmail.com')
+
+        for linha in resultado:
+                if linha:  # Verifica se a linha não está vazia
+                        nome = linha[0]  
+                        email = linha[1]  
+                        cpf = linha[2]
+                        salario = linha[3]
+                        setor = linha[4]
+                        senha = linha[5]
+                        cargo = linha[6]
+
 
         funcionario_button = ctk.CTkButton(
                                    master=home,
@@ -904,94 +939,102 @@ def Abrir_tela_md():
                                 hover=None,
                                 corner_radius=5,
                                 width=376,
-                                height=26
-                                          )
+                                height=26,
+
+                                                           )
         aumento_button.place(x=429,y=437)
         
 
         
         
-        nome_entry = ctk.CTkEntry(
+        nome_entry = ctk.CTkLabel(
                                 interior_md,
+                                text=f'{nome}',
                                 font=('Istok Web', 15),
                                 fg_color='white',
                                 bg_color='white',
-                                border_width=0,
                                 width=376,
-                                height=3
+                                height=3,
+                                anchor='w'
                                           )
         nome_entry.place(x=35,y=146)                               
         
 
-        email_entry = ctk.CTkEntry(
+        email_entry = ctk.CTkLabel(
                                 interior_md,
+                                text=f'{email}',
                                 font=('Istok Web', 15),
                                 fg_color='white',
                                 bg_color='white',
-                                border_width=0,
                                 width=376,
-                                height=3
+                                height=3,
+                                anchor='w'
                                           )
         email_entry.place(x=429,y=146)
 
 
-        cpf_entry = ctk.CTkEntry(
+        cpf_entry = ctk.CTkLabel(
                                 interior_md,
+                                text=f'{cpf}',
                                 font=('Istok Web', 15),
                                 fg_color='white',
                                 bg_color='white',
-                                border_width=0,
                                 width=376,
-                                height=3
+                                height=3,
+                                anchor='w'
                                           )
         cpf_entry.place(x=35,y=244)
 
 
-        salario_entry = ctk.CTkEntry(
+        salario_entry = ctk.CTkLabel(
                                 interior_md,
+                                text=f'{salario}',
                                 font=('Istok Web', 15),
                                 fg_color='white',
                                 bg_color='white',
-                                border_width=0,
                                 width=376,
-                                height=3
+                                height=3,
+                                anchor='w'
                                           )
         salario_entry.place(x=429,y=244)
 
 
-        setor_entry = ctk.CTkEntry(
+        setor_entry = ctk.CTkLabel(
                                 interior_md,
+                                text=f'{setor}',
                                 font=('Istok Web', 15),
                                 fg_color='white',
                                 bg_color='white',
-                                border_width=0,
                                 width=376,
-                                height=3
+                                height=3,
+                                anchor='w'
                                           )
         setor_entry.place(x=35,y=342)
 
 
-        senha_entry = ctk.CTkEntry(
+        senha_entry = ctk.CTkLabel(
                                 interior_md,
+                                text=f'{senha}',
                                 font=('Istok Web', 15),
                                 fg_color='white',
                                 bg_color='white',
-                                border_width=0,
                                 width=376,
-                                height=3
+                                height=3,
+                                anchor='w'
                                           )
         senha_entry.place(x=429,y=342)
 
 
 
-        cargo_entry = ctk.CTkEntry(
+        cargo_entry = ctk.CTkLabel(
                                 interior_md,
+                                text=f'{cargo}',
                                 font=('Istok Web', 15),
                                 fg_color='white',
                                 bg_color='white',
-                                border_width=0,
                                 width=376,
-                                height=3
+                                height=3,
+                                anchor='w'
                                           )
         cargo_entry.place(x=35,y=440)
 
