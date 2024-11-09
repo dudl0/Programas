@@ -1,0 +1,5 @@
+bing-rewards --mobile --count=50 --exe "C:\Program Files\Google\Chrome\Application\chrome.exe"
+
+bing-rewards --count=100 --exe "C:\Program Files\Google\Chrome\Application\chrome.exe"
+
+bing-rewards

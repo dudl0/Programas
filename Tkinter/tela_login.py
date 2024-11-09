@@ -327,7 +327,7 @@ def Abrir_tela_funcionario():
 
 def Abrir_tela_cadastro():
     
-
+        
 
 
         meusdados_button = ctk.CTkButton(
@@ -760,7 +760,7 @@ def Abrir_tela_md():
                 return linhas_encontradas  # Retorna a lista de linhas
 
         # Chamada da função e armazenamento da saída em uma lista
-        resultado = buscar_email('joao@gmail.com')
+        resultado = buscar_email('ff')
 
         for linha in resultado:
                 if linha:  # Verifica se a linha não está vazia
